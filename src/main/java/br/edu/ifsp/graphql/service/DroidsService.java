@@ -2,14 +2,16 @@ package br.edu.ifsp.graphql.service;
 
 import br.edu.ifsp.graphql.model.Droid;
 import br.edu.ifsp.graphql.repository.DroidsRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DroidService {
+@Service
+public class DroidsService {
     private final DroidsRepository droidRepository;
 
-    public DroidService(DroidsRepository droidRepository) {
+    public DroidsService(DroidsRepository droidRepository) {
         this.droidRepository = droidRepository;
     }
 

@@ -2,6 +2,9 @@ package br.edu.ifsp.graphql.controller;
 
 import java.util.List;
 
+import br.edu.ifsp.graphql.service.DroidsService;
+import br.edu.ifsp.graphql.service.HumanService;
+import br.edu.ifsp.graphql.service.StarshipService;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
@@ -17,14 +20,22 @@ import br.edu.ifsp.graphql.model.Starship;
 
 @Controller
 public class StarWarController {
+    private final HumanService humanService;
+    private final DroidsService droidService;
+    private final StarshipService starshipService;
 
-    /*
-     * Mapeado no resources/graphql/scheme.graphqls 
-     * 
-     * type Query {
-     *     hero(episode: Episode): Character
-     * }
-     */
+
+    public StarWarController(
+            HumanService humanService,
+            DroidsService droidService,
+            StarshipService starshipService) {
+        this.humanService = humanService;
+        this.droidService = droidService;
+        this.starshipService = starshipService;
+
+    }
+
+
     @QueryMapping
     public Character hero(@Argument Episode episode) {
         return new Droid(

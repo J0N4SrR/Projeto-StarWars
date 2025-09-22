@@ -2,10 +2,12 @@ package br.edu.ifsp.graphql.service;
 
 import br.edu.ifsp.graphql.model.Human;
 import br.edu.ifsp.graphql.repository.HumanRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class HumanService {
     private final HumanRepository humanRepository;
 

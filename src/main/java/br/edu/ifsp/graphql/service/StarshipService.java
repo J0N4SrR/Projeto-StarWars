@@ -2,9 +2,11 @@ package br.edu.ifsp.graphql.service;
 
 import br.edu.ifsp.graphql.model.Starship;
 import br.edu.ifsp.graphql.repository.StarshipRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class StarshipService {
     private final StarshipRepository starshipRepository;
 
