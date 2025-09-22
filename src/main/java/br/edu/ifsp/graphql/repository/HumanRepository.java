@@ -1,12 +1,15 @@
 package br.edu.ifsp.graphql.repository;
 
 import br.edu.ifsp.graphql.model.Human;
+import org.springframework.stereotype.Repository;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import static br.edu.ifsp.graphql.util.Utilities.ConvertToNumeric;
 import static br.edu.ifsp.graphql.util.Utilities.isNumeric;
 
+@Repository
 public class HumanRepository {
     private final List<Human> humans = new ArrayList<>();
 
@@ -15,7 +18,12 @@ public class HumanRepository {
     }
 
     public Human findHumanById(String id){
-        if(isNumeric(id)) return humans.get(ConvertToNumeric(id));
+        if(isNumeric(id)) {
+            int index = ConvertToNumeric(id);
+            if (index >= 0 && index < humans.size()) {
+                return humans.get(index);
+            }
+        }
         return null;
     }
 
@@ -44,8 +52,11 @@ public class HumanRepository {
 
     public boolean deleteHuman(String id){
         if(isNumeric(id)){
-            humans.remove(ConvertToNumeric(id));
-            return true;
+            int index = ConvertToNumeric(id);
+            if (index >= 0 && index < humans.size()) {
+                humans.remove(index);
+                return true;
+            }
         }
         return false;
     }
