@@ -5,7 +5,9 @@ import br.edu.ifsp.graphql.model.Human;
 import br.edu.ifsp.graphql.repository.DroidsRepository;
 import br.edu.ifsp.graphql.repository.HumanRepository;
 import br.edu.ifsp.graphql.model.Character;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CharacterService {
     private final HumanRepository humanRepository;
     private final DroidsRepository droidsRepository; // Use o nome exato da sua classe
