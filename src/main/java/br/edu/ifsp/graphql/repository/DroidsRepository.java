@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
-// Supondo que você tenha a mesma classe Utilities
 import static br.edu.ifsp.graphql.util.Utilities.ConvertToNumeric;
 import static br.edu.ifsp.graphql.util.Utilities.isNumeric;
 
@@ -21,7 +20,6 @@ public class DroidsRepository {
 
     public Droid findDroidById(String id){
         if(isNumeric(id)) {
-            // Cuidado! Isso pode causar ArrayIndexOutOfBoundsException se o ID não corresponder a um índice válido.
             int index = ConvertToNumeric(id);
             if (index >= 0 && index < droids.size()) {
                 return droids.get(index);
