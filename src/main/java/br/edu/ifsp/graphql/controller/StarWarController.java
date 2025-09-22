@@ -2,6 +2,7 @@ package br.edu.ifsp.graphql.controller;
 
 import java.util.List;
 
+import br.edu.ifsp.graphql.service.CharacterService;
 import br.edu.ifsp.graphql.service.DroidsService;
 import br.edu.ifsp.graphql.service.HumanService;
 import br.edu.ifsp.graphql.service.StarshipService;
@@ -23,18 +24,37 @@ public class StarWarController {
     private final HumanService humanService;
     private final DroidsService droidService;
     private final StarshipService starshipService;
+    private final CharacterService characterService;
 
 
     public StarWarController(
             HumanService humanService,
             DroidsService droidService,
-            StarshipService starshipService) {
+            StarshipService starshipService, CharacterService characterService) {
         this.humanService = humanService;
         this.droidService = droidService;
         this.starshipService = starshipService;
+        this.characterService = characterService;
+
 
     }
 
+
+    @QueryMapping
+    public List<Human> humans() {
+        // Delega a tarefa para o serviço. Nenhuma lógica aqui.
+        return humanService.getAllHumans();
+    }
+
+    @QueryMapping
+    public List<Starship> starships() {
+        return starshipService.getAllStarships();
+    }
+
+    @QueryMapping
+    public Character character(@Argument String id) {
+        return characterService.findCharacterById(id);
+    }
 
     @QueryMapping
     public Character hero(@Argument Episode episode) {
@@ -47,13 +67,6 @@ public class StarWarController {
         );
     }
 
-    /*
-     * Mapeado no resources/graphql/scheme.graphqls 
-     * 
-     * type Query {
-     *     droid(id: ID!): Droid
-     * }
-     */
     @QueryMapping
     public Droid droid(@Argument String id) {
         return new Droid(
@@ -65,13 +78,7 @@ public class StarWarController {
         );
     }
 
-    /*
-     * Mapeado no resources/graphql/scheme.graphqls 
-     * 
-     * type Query {
-     *      search(text: String!): [SearchResult!]!
-     * }
-     */
+
     @QueryMapping
     public List<Object> search(@Argument String text) {
         return List.of(
@@ -80,15 +87,31 @@ public class StarWarController {
                 new Starship(3000, "Millenium Falcon", 1000));
     }
 
-    /*
-     * Mapeado no resources/graphql/scheme.graphqls 
-     * 
-     *  type Mutation {
-     *      createReview(episode: Episode!, review: ReviewInput!): Review
-     *  }
-     */
+
     @MutationMapping
     public Review createReview(@Argument Episode episode, @Argument ReviewInput review) {
         return new Review(review.getStars(), review.getCommentary());
     }
+
+    @MutationMapping
+    public Human createHuman(@Argument String id, @Argument String name, @Argument Double height) {
+        return humanService.createHuman(id, name, height);
+    }
+
+    @MutationMapping
+    public Droid createDroid(@Argument String id, @Argument String name, @Argument String primaryFunction) {
+        return droidService.createDroid(id, name, primaryFunction);
+    }
+
+    @MutationMapping
+    public Starship createStarship(@Argument int id, @Argument String name, @Argument Double length) {
+        return starshipService.createStarship(id, name, length);
+    }
+
+    @MutationMapping
+    public Character addFriend(@Argument String characterId, @Argument String friendId) {
+        return characterService.addFriend(characterId, friendId);
+    }
+
+
 }

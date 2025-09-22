@@ -23,7 +23,7 @@ public class HumanService {
         return humanRepository.findHumanById(id);
     }
 
-    public Human createHuman(String name, double height) {
+    public Human createHuman(String name, String s, double height) {
         Human newHuman = new Human(null, name, new ArrayList<>(), new ArrayList<>(), height);
         return humanRepository.saveHuman(newHuman);
     }
